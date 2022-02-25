@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics.Eventing.Reader;
 using System.IO;
 using System.Threading.Tasks;
 using LogParser.ExceptionStore;
@@ -14,7 +13,7 @@ namespace LogParserTests;
 /// <summary>
 /// "Repeatable Execution" - as coined by Mark Seaman
 /// https://blog.ploeh.dk/2020/03/23/repeatable-execution/
-/// Test the ability to replay any exceptions thrown during log parsing. 
+/// Test the ability to replay exceptions thrown during log parsing. 
 /// </summary>
 public class RepeatableExecutionTests
 {
