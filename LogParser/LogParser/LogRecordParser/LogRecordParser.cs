@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Net;
+using LogParser.Models;
 using Sprache;
 
 namespace LogParser.LogRecordParser;

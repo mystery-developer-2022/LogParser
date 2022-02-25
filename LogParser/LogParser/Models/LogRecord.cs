@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Net;
-using System.Net.Http;
 
-namespace LogParser;
+namespace LogParser.Models;
 
 /// <summary>
 /// models a single log record - corresponding to one line og the logfile
