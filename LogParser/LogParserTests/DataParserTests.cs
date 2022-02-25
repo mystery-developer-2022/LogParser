@@ -1,12 +1,15 @@
 ﻿using System;
 using System.Globalization;
-using System.Linq;
 using System.Net;
 using Shouldly;
 using Xunit;
 
 namespace LogParserTests;
 
+
+/// <summary>
+/// low level tests for the data types chosen for our LogRecord model
+/// </summary>
 public class DataParserTests
 {
     [Fact]
@@ -25,7 +28,6 @@ public class DataParserTests
             var ip = IPAddress.Parse("257.71.128.21");
         });
     }
-    
     
     [Fact]
     public void ParseDateFormat()

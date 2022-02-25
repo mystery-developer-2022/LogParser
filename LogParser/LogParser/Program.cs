@@ -1,7 +1,8 @@
 ﻿using System;
-using System.Linq;
 using System.Threading.Tasks;
 using CommandLine;
+using LogParser.ExceptionStore;
+using LogParser.Processors;
 
 namespace LogParser
 {
@@ -21,15 +22,14 @@ namespace LogParser
         {
             await Parser.Default.ParseArguments<Options>(args).WithParsedAsync(async options =>
             {
-                await ExecuteLogParser(options.File ?? "programming-task-example-data.log", options.StreamMode);
+                var exceptionStore = new FileExceptionStore($"Exceptions-{DateTime.Now:yyyy-MM-dd-HHmmss}");
+                var parser = new DomProcessor(exceptionStore);
+                var result = await parser.ParseFile(options.File ?? "programming-task-example-data.log");
+                await result.PrintResult(Console.Out);
+
             });
         }
-
         
-        private static async Task ExecuteLogParser(string fileName, bool streamMode)
-        {
-            await Console.Out.WriteLineAsync($"parsing {fileName} using {(streamMode ? "stream" : "DOM")} parsing mode");
-        }
     }
     
 }

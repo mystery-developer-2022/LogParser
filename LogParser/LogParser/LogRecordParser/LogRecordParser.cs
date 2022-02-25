@@ -5,7 +5,7 @@ using System.Linq;
 using System.Net;
 using Sprache;
 
-namespace LogParser;
+namespace LogParser.LogRecordParser;
 
 
 public class LogRecordParser
@@ -14,9 +14,10 @@ public class LogRecordParser
     {
         try
         {
-            // sprache parser will chop our line into string values
-            var stringValues = SpracheParser.RecordParser.Parse(logLine).ToList();
-            var methodUrlVersion = stringValues[4].Split(" ").ToList();
+            var stringValues = SpracheParser.RecordParser.Parse(logLine).ToList(); // sprache parser: chop line into string values
+            if (stringValues.Count < 9) throw new ArgumentException("Failed to extract expected number of values from log line"); // we ignore unexpected extra fields but throw if expected fields are missing.
+            
+            var methodUrlVersion = stringValues[4].Split(" ").ToList(); // ie: GET /intranet-analytics/ HTTP/1.1
             return new LogRecord()
             {
                 IPAddress = IPAddress.Parse(stringValues[0]),

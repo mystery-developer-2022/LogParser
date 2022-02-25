@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using LogParser;
+using LogParser.LogRecordParser;
 using Shouldly;
 using Sprache;
 using Xunit;
