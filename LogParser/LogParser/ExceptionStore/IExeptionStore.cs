@@ -11,4 +11,5 @@ public interface IExceptionStore
     
     public IAsyncEnumerable<LogRecordParseException> FetchExceptions();
 
+    public Task<LogRecordParseException?> LoadException(string path);
 }

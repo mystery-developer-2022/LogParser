@@ -14,7 +14,7 @@ namespace LogParser
             [Option('f', "file", Required = false, HelpText = "log file to parse or 'programming-task-example-data.log' by default")]
             public string? File { get; set; }
             
-            [Option('s', "stream", Required = false, HelpText = "parse file in stream mode")]
+            [Option('s', "stream", Required = false, HelpText = "parse file in memory-efficient stream mode instead of DOM mode")]
             public bool StreamMode { get; set; }
         }
         
@@ -23,10 +23,11 @@ namespace LogParser
             await Parser.Default.ParseArguments<Options>(args).WithParsedAsync(async options =>
             {
                 var exceptionStore = new FileExceptionStore($"Exceptions-{DateTime.Now:yyyy-MM-dd-HHmmss}");
-                var parser = new DomProcessor(exceptionStore);
-                var result = await parser.ParseFile(options.File ?? "programming-task-example-data.log");
+                ILogfileProcessor processor = options.StreamMode 
+                    ? new StreamProcessor(exceptionStore)
+                    : new DomProcessor(exceptionStore);
+                var result = await processor.ParseFile(options.File ?? "programming-task-example-data.log");
                 await result.PrintResult(Console.Out);
-
             });
         }
         

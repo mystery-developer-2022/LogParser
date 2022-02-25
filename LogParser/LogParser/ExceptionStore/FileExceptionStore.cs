@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Net;
 using System.Threading.Tasks;
 using LogParser.LogRecordParser;
 using Newtonsoft.Json;
@@ -34,7 +33,13 @@ public class FileExceptionStore: IExceptionStore
             if (deserializedException != null) yield return deserializedException;
         }
     }
-    
+
+    public async Task<LogRecordParseException?> LoadException(string path)
+    {
+        return JsonConvert.DeserializeObject<LogRecordParseException>((await File.ReadAllTextAsync(path)), JsonSettings);
+    }
+
+
     private JsonSerializerSettings JsonSettings => new JsonSerializerSettings()
     {
         TypeNameHandling = TypeNameHandling.All
